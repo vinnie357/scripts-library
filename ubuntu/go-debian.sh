@@ -13,7 +13,7 @@ TARGET_GOROOT=${2:-"/usr/local/go"}
 TARGET_GOPATH=${3:-"/go"}
 USERNAME=${4:-"automatic"}
 UPDATE_RC=${5:-"true"}
-INSTALL_GO_TOOLS=${6:-"true"}
+INSTALL_GO_TOOLS=${6:-"false"}
 
 set -e
 

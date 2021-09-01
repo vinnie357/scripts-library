@@ -1,7 +1,7 @@
 #!/bin/bash
-echo "---installing pre-commit---"
+echo "---installing ansible---"
 
-preCommitVersion=${1:-"latest"}
+ansibleVersion=${1:-"latest"}
 set -e
 
 if [ "$(id -u)" -ne 0 ]; then
@@ -9,6 +9,6 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
-pip3 install "pre-commit==${preCommitVersion}"
+pip3 install "ansible==${ansibleVersion}"
 
-echo "---pre-commit done---"
+echo "---ansible done---"
