@@ -59,7 +59,8 @@ GO_INSTALL_SCRIPT="$(cat <<EOF
     echo "Downloading Go ${TARGET_GO_VERSION}..."
     curl -sSL -o /tmp/go.tar.gz "https://golang.org/dl/go${TARGET_GO_VERSION}.linux-amd64.tar.gz"
     echo "Extracting Go ${TARGET_GO_VERSION}..."
-    tar -xzf /tmp/go.tar.gz -C "${TARGET_GOROOT}" --strip-components=1
+    #tar -xzf /tmp/go.tar.gz -C "${TARGET_GOROOT}" --strip-components=1
+    tar -xvf /tmp/go.tar.gz -C "${TARGET_GOROOT}" go/bin/go --strip-components=1
     rm -f /tmp/go.tar.gz
 EOF
 )"
