@@ -19,6 +19,6 @@ export DEBIAN_FRONTEND=noninteractive
 # install base
 apt-get install -y \
 software-properties-common \
-gpg
+gnupg2
 
 echo "==== base done ===="
