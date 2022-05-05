@@ -7,12 +7,10 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
-# run update
-apt-get update
 # Ensure apt is in non-interactive to avoid prompts
 export DEBIAN_FRONTEND=noninteractive
 # install base
-apt-get install -y \
+apt-get update && apt-get install -y \
 software-properties-common \
 gnupg2
 
