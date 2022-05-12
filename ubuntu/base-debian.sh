@@ -11,7 +11,9 @@ fi
 export DEBIAN_FRONTEND=noninteractive
 # install base
 apt-get update && apt-get install -y \
-software-properties-common \
+software-properties-common
+# gnupg2 buggy without 2nd update
+apt-get update && apt-get install -y \
 gnupg2
 
 echo "==== base done ===="
