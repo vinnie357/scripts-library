@@ -11,8 +11,8 @@ fi
 # add image
 arch=`uname -m`
 image_bucket_url="https://s3.amazonaws.com/spec.ccfc.min/img/quickstart_guide/$arch"
-wget "$${image_bucket_url}/kernels/vmlinux.bin"
-wget "$${image_bucket_url}/rootfs/bionic.rootfs.ext4"
+wget "${image_bucket_url}/kernels/vmlinux.bin"
+wget "${image_bucket_url}/rootfs/bionic.rootfs.ext4"
 # firecracker example config
 cat <<EOF > vmconfig.json
 {
