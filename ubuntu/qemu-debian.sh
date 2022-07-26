@@ -13,6 +13,6 @@ apt-get update
 export DEBIAN_FRONTEND=noninteractive
 # install qemu
 apt-get install -y \
-qemu
+qemu qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
 
 echo "==== qemu done ===="
