@@ -1,5 +1,7 @@
 #!/bin/bash
 echo "=====install consul====="
+#apt-cache madison consul
+VERSION=${1:-${CONSUL_VERSION:-"1.15.2-1"}}
 set -e
 
 if [ "$(id -u)" -ne 0 ]; then
@@ -7,9 +9,9 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
-# install nomad
+# install consul
 export DEBIAN_FRONTEND=noninteractive
 curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
 apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-apt-get update && sudo apt-get -y install consul
+apt-get update && sudo apt-get -y install consul=${VERSION}
 echo "===== consul done ====="
