@@ -1,11 +1,13 @@
-  
 #!/bin/bash
 echo "---installing awscli2---"
 # example: ./awscli2-debian.sh "2.2.20"
 # versions https://github.com/aws/aws-cli/blob/v2/CHANGELOG.rst
-VERSION=${1:-"2.2.20"}
+# releases https://github.com/aws/aws-cli/releases
+VERSION=${1:-"2.13.31"}
 COMMAND="aws"
 TOOLS="gpg curl unzip"
+ARCH=$(uname -m)
+ARCH_NAME=$(dpkg --print-architecture)
 set -e
 
 if [ "$(id -u)" -ne 0 ]; then
@@ -13,11 +15,10 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
-if command -v $COMMAND &> /dev/null ; then
-    echo -e 'please uninstall awscli1.0 before continuing, pip3 uninstall awscli'
-    exit 1
-fi
+DEBIAN_FRONTEND=noninteractive apt-get update & apt-get install -y $TOOLS
 
+# gpg key
+# https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
 cat << 'EOF' > awscligpg.key
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
@@ -32,27 +33,27 @@ lrFj6UwAsGukBTAOxC0l/dnSmZhJ7Z1KmEWilro/gOrjtOxqRQutlIqG22TaqoPG
 fYVN+en3Zwbt97kcgZDwqbuykNt64oZWc4XKCa3mprEGC3IbJTBFqglXmZ7l9ywG
 EEUJYOlb2XrSuPWml39beWdKM8kzr1OjnlOm6+lpTRCBfo0wa9F8YZRhHPAkwKkX
 XDeOGpWRj4ohOx0d2GWkyV5xyN14p2tQOCdOODmz80yUTgRpPVQUtOEhXQARAQAB
-tCFBV1MgQ0xJIFRlYW0gPGF3cy1jbGlAYW1hem9uLmNvbT6JAlQEEwEIAD4WIQT7
-Xbd/1cEYuAURraimMQrMRnJHXAUCXYKvtQIbAwUJB4TOAAULCQgHAgYVCgkICwIE
-FgIDAQIeAQIXgAAKCRCmMQrMRnJHXJIXEAChLUIkg80uPUkGjE3jejvQSA1aWuAM
-yzy6fdpdlRUz6M6nmsUhOExjVIvibEJpzK5mhuSZ4lb0vJ2ZUPgCv4zs2nBd7BGJ
-MxKiWgBReGvTdqZ0SzyYH4PYCJSE732x/Fw9hfnh1dMTXNcrQXzwOmmFNNegG0Ox
-au+VnpcR5Kz3smiTrIwZbRudo1ijhCYPQ7t5CMp9kjC6bObvy1hSIg2xNbMAN/Do
-ikebAl36uA6Y/Uczjj3GxZW4ZWeFirMidKbtqvUz2y0UFszobjiBSqZZHCreC34B
-hw9bFNpuWC/0SrXgohdsc6vK50pDGdV5kM2qo9tMQ/izsAwTh/d/GzZv8H4lV9eO
-tEis+EpR497PaxKKh9tJf0N6Q1YLRHof5xePZtOIlS3gfvsH5hXA3HJ9yIxb8T0H
-QYmVr3aIUes20i6meI3fuV36VFupwfrTKaL7VXnsrK2fq5cRvyJLNzXucg0WAjPF
-RrAGLzY7nP1xeg1a0aeP+pdsqjqlPJom8OCWc1+6DWbg0jsC74WoesAqgBItODMB
-rsal1y/q+bPzpsnWjzHV8+1/EtZmSc8ZUGSJOPkfC7hObnfkl18h+1QtKTjZme4d
-H17gsBJr+opwJw/Zio2LMjQBOqlm3K1A4zFTh7wBC7He6KPQea1p2XAMgtvATtNe
-YLZATHZKTJyiqA==
-=vYOk
+tCFBV1MgQ0xJIFRlYW0gPGF3cy1jbGlAYW1hem9uLmNvbT6JAlQEEwEIAD4CGwMF
+CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQT7Xbd/1cEYuAURraimMQrMRnJHXAUC
+ZMKcEgUJCSEf3QAKCRCmMQrMRnJHXCilD/4vior9J5tB+icri5WbDudS3ak/ve4q
+XS6ZLm5S8l+CBxy5aLQUlyFhuaaEHDC11fG78OduxatzeHENASYVo3mmKNwrCBza
+NJaeaWKLGQT0MKwBSP5aa3dva8P/4oUP9GsQn0uWoXwNDWfrMbNI8gn+jC/3MigW
+vD3fu6zCOWWLITNv2SJoQlwILmb/uGfha68o4iTBOvcftVRuao6DyqF+CrHX/0j0
+klEDQFMY9M4tsYT7X8NWfI8Vmc89nzpvL9fwda44WwpKIw1FBZP8S0sgDx2xDsxv
+L8kM2GtOiH0cHqFO+V7xtTKZyloliDbJKhu80Kc+YC/TmozD8oeGU2rEFXfLegwS
+zT9N+jB38+dqaP9pRDsi45iGqyA8yavVBabpL0IQ9jU6eIV+kmcjIjcun/Uo8SjJ
+0xQAsm41rxPaKV6vJUn10wVNuhSkKk8mzNOlSZwu7Hua6rdcCaGeB8uJ44AP3QzW
+BNnrjtoN6AlN0D2wFmfE/YL/rHPxU1XwPntubYB/t3rXFL7ENQOOQH0KVXgRCley
+sHMglg46c+nQLRzVTshjDjmtzvh9rcV9RKRoPetEggzCoD89veDA9jPR2Kw6RYkS
+XzYm2fEv16/HRNYt7hJzneFqRIjHW5qAgSs/bcaRWpAU/QQzzJPVKCQNr4y0weyg
+B8HCtGjfod0p1A==
+=gdMc
 -----END PGP PUBLIC KEY BLOCK-----
 EOF
 
 ## download
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${VERSION}.zip" -o "awscliv2.zip"
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${VERSION}.zip.sig" -o "awscliv2.sig"
+curl "https://awscli.amazonaws.com/awscli-exe-linux-${ARCH}-${VERSION}.zip" -o "awscliv2.zip"
+curl "https://awscli.amazonaws.com/awscli-exe-linux-${ARCH}-${VERSION}.zip.sig" -o "awscliv2.sig"
 # import key
 gpg --import awscligpg.key
 # verify key
@@ -67,18 +68,5 @@ rm -rf aws
 rm -f awscliv2.zip awscliv2.sig awscligpg.key
 # check install
 /usr/local/bin/aws --version
-
-function uninstall {
-## remove
-# where
-path=$(which aws)
-usrPath=$(ls -l $path | awk '{print $11}')
-echo "removing $usrPath"
-#symlinks
-rm /usr/local/bin/aws
-rm /usr/local/bin/aws_completer
-# files
-rm -rf /usr/local/aws-cli/v2
-}
 
 echo "---installing awscli2 done---"
