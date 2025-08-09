@@ -1,0 +1,43 @@
+{
+  "installation_history": [
+    {
+      "timestamp": "2025-08-08T13:53:07Z",
+      "version": "latest",
+      "source_path": "/Users/vinnie/github/scripts-library/claudio/.claude",
+      "target_path": "/Users/vinnie/github/scripts-library/.claude",
+      "upgrade_type": "comprehensive_update",
+      "backup_location": "/Users/vinnie/github/scripts-library/.claude/.upgrades/backups/backup-20250808-135307",
+      "components_updated": [
+        "agents/claudio/claudio-coordinator.md",
+        "agents/claudio/claudio-discovery-orchestrator.md", 
+        "agents/claudio/install-coordinator.md",
+        "agents/claudio/install-validator.md",
+        "agents/claudio/prompts/claudio/claude.md",
+        "agents/claudio/upgrade-orchestrator.md",
+        "commands/claudio/claudio.md",
+        "commands/claudio/install.md"
+      ],
+      "components_added": [
+        "agents/claudio/discovery-validator.md",
+        "agents/claudio/new-command-generator.md",
+        "agents/claudio/new-command-validator.md",
+        "agents/claudio/test-command-generator.md",
+        "agents/claudio/workflow-validator.md",
+        "agents/claudio/prompts/new-command/",
+        "agents/claudio/prompts/test-generation/",
+        "agents/claudio/prompts/validation/",
+        "commands/claudio/generate-test-commands.md",
+        "commands/claudio/new-command.md"
+      ],
+      "total_files": 138,
+      "status": "completed",
+      "validation_passed": true
+    }
+  ],
+  "current_version": {
+    "timestamp": "2025-08-08T13:53:07Z",
+    "source_hash": "calculated_from_source",
+    "target_hash": "calculated_from_target",
+    "compatibility": "full"
+  }
+}

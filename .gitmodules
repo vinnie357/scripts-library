@@ -1,0 +1,3 @@
+[submodule "claudio"]
+	path = claudio
+	url = git@github.com:vinnie357/claudio.git
